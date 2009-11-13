@@ -1,0 +1,5 @@
+#summary Chrome-Reload release notes
+
+= Version 0.1 - Nov 13, 2009 =
+
+  * Initial Release
