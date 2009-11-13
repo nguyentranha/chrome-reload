@@ -1,0 +1,16 @@
+{
+    "name": "ChromeReload",
+    "version": "0.1",
+    "description": "Automatically reload a page. Configure how often each page reloads and see a count-down until the next load",
+    "background_page": "background.html",
+    "browser_action": {
+        "default_title": "Reloader",       // optional; shown in tooltip
+        "popup": "popup.html",               // optional
+        "default_icon": "icons/KnobLoopOff.png"
+    },
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "tabs"
+    ]
+}
