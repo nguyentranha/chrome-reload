@@ -2,6 +2,7 @@
     "name": "ChromeReload",
     "version": "0.1",
     "description": "Automatically reload a page. Configure how often each page reloads and see a count-down until the next load",
+    "update_url": "http://chrome-reload.googlecode.com/svn/trunk/updates/updates.xml",
     "background_page": "background.html",
     "browser_action": {
         "default_title": "Reloader",       // optional; shown in tooltip
