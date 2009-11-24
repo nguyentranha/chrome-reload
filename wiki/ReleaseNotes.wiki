@@ -3,3 +3,7 @@
 = Version 0.1 - Nov 13, 2009 =
 
   * Initial Release
+
+= Version 0.1.1 - Nov 24, 2009 =
+
+  * Added icons
