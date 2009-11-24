@@ -9,8 +9,8 @@
     "update_url": "http://chrome-reload.googlecode.com/svn/trunk/updates/updates.xml",
     "background_page": "background.html",
     "browser_action": {
-        "default_title": "Reloader",       // optional; shown in tooltip
-        "popup": "popup.html",               // optional
+        "default_title": "Reloader", 
+        "popup": "popup.html",
         "default_icon": "icons/KnobLoopOff.png"
     },
     "permissions": [
