@@ -134,13 +134,45 @@
         } else {
             var badgeText = String(tabs[tab_id].seconds_to_next_reload);
 
-            var mins = Math.floor(tabs[tab_id].seconds_to_next_reload/60);
+            //var mins = Math.floor(tabs[tab_id].seconds_to_next_reload/60);
             var secs = tabs[tab_id].seconds_to_next_reload%60;
-            if (secs < 10) {
-                secs = '0' + String(secs);
-            }
-            badgeText= String(mins) + ':' + String(secs);
+            //if (secs < 10) {
+            //    secs = '0' + String(secs);
+            //}            
+            //badgeText= String(mins) + ':' + String(secs);
+            
+            var mins = Math.floor((tabs[tab_id].seconds_to_next_reload/60)%60);
+            var hours = Math.floor((tabs[tab_id].seconds_to_next_reload/(60*60))%24);
+            var days = Math.floor((tabs[tab_id].seconds_to_next_reload/(60*60*24)));
 
+    	    // Format
+    	    // The banner fits about 4.5 characters (depending on the character's width)
+    	    if (days > 999) {
+        		badgeText = 'long'; // it will take long...
+    	    } else if (days > 9) {
+        		badgeText = String(days) + 'd';
+    	    } else if (days > 0) {
+        		// The 'h' will not entirely fit on the banner all the time.  Live with it.
+        		badgeText = String(days) + 'd' + String(hours) + 'h';
+    	    } else if (hours > 0) {
+        		if (mins < 10) {
+        		    mins = '0' + String(mins);
+        		}
+        		// Blinking ':'
+        		// Note: The banner uses a variable-width font; both strings have to have the same width
+    		if (secs % 2) {
+    		    var blinker = ':';
+    		} else {
+    		    var blinker = ' ';
+    		}
+    		badgeText = String(hours) + blinker + String(mins);
+    	    } else {
+            		if (secs < 10) {
+            		    secs = '0' + String(secs);
+        		}
+        		badgeText = String(mins) + ':' + String(secs);
+    	    }
+            
             chrome.browserAction.setBadgeText({text:badgeText, tabId:tab_id});
         }
     }
