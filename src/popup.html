@@ -1,17 +1,51 @@
 <body onload="restoreOptions()">
 <div style="width:10pc;">
     Reload page every:
-    <form name="reload_options">
-        <input type="radio" name="reloadOption" value="0" checked>Never <br />
-        <input type="radio" name="reloadOption" value="5000">5 seconds<br />
-        <input type="radio" name="reloadOption" value="15000">15 seconds<br />
-        <input type="radio" name="reloadOption" value="30000">30 seconds<br />
-        <input type="radio" name="reloadOption" value="60000">1 minute<br />
-        <input type="radio" name="reloadOption" value="120000">2 minutes<br />
-        <input type="radio" name="reloadOption" value="300000">5 minutes<br />
-        <input type="radio" name="reloadOption" value="900000">15 minutes<br />
-        <input type="radio" name="reloadOption" value="1800000">30 minutes<br />
-        <input type="button" onclick="setReloader()" value="Set">
+        <form name="reload_options" onsubmit="setReloader()" >
+    	<!-- Poor man's menu emulation.  TODO: highlight when mouse is over -->
+    	<!-- XXX Replace the hard-coded indices -->
+    	<div width="100%" onclick="document.reload_options.reloadOption[0].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="0" checked>Never
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[1].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="5000">5 seconds
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[2].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="15000">15 seconds
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[3].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="30000">30 seconds
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[4].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="60000">1 minute
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[5].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="120000">2 minutes  
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[6].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="300000">5 minutes 
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[7].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="900000">15 minutes 
+    	</div>
+            <div width="100%" onclick="document.reload_options.reloadOption[8].checked = true; setReloader()">
+    	    <input type="radio" name="reloadOption" value="1800000">30 minutes
+    	</div>
+    
+    	<!-- Free-form input -->
+    	<!-- TODO: days/hours/minutes -->
+    	<!-- XXX when the time is *real* high, like 999999999999999999999999999999999 seconds, the page just keeps reloading instantly -->
+    	<div id="freeFormDiv" width="100%">
+    	    <input type="radio" name="reloadOption" value="" id="freeForm"
+    		onclick="var f = document.reload_options.reloadOptionSeconds; f.focus(); f.select()"
+    	    />
+    	    <input type="number" name="reloadOptionSeconds" value="" size="2"
+    		onfocus="document.getElementById('freeForm').checked = true"
+    		onunfocus="setReloader()"
+    		/>seconds<br />
+    	</div>
+
+        <input type="submit" value="Set">
     </form>
 </div>
 
@@ -28,22 +62,35 @@
         for( i = 0; i < document.reload_options.reloadOption.length; i++ ) {
             if(document.reload_options.reloadOption[i].value == reloadTime) {
                 document.reload_options.reloadOption[i].checked = true;
-            } else {
-                document.reload_options.reloadOption[i].checked = false;
+                return;
             }
         }
-
+        // If we got this far, the value is not on the radio buttons
+        document.getElementById('freeForm').checked = true;
+        document.reload_options.reloadOptionSeconds.value = Math.floor(reloadTime / 1000) /* milliseconds -> seconds */;
     }
 
 
     function setReloader() {
         var option = 0;
+        // Walk thru the radios
         for( i = 0; i < document.reload_options.reloadOption.length; i++ ) {
             if( document.reload_options.reloadOption[i].checked == true ) {
                 option = document.reload_options.reloadOption[i].value;
                 break;
             }
         }
+        
+    	// Free-form input overrides the radios
+    	if (document.getElementById('freeForm').checked == true) {
+    	    if (document.reload_options.reloadOptionSeconds.value > 0) {
+        		option = document.reload_options.reloadOptionSeconds.value * 1000 /* seconds -> milliseconds */;
+    	    } else {
+        		// Reset the value
+        		option = 0;
+    	    }
+    	}
+        
         
         var views = chrome.extension.getViews();
         for (var i in views) {
@@ -53,6 +100,8 @@
         }
 
         window.close();
+        
+        return true;  // We use this function in onSubmit; probably not necessary
     }
 
 </script>
