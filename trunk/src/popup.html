@@ -1,41 +1,41 @@
-<body onload="restoreOptions()">
-<div style="width:10pc;">
+<body onload="restoreOptions()" style="background-color:white">
+<div style="width:10pc;color:black">
     Reload page every:
         <form name="reload_options" onsubmit="setReloader()" >
     	<!-- Poor man's menu emulation.  TODO: highlight when mouse is over -->
     	<!-- XXX Replace the hard-coded indices -->
-    	<div width="100%" onclick="document.reload_options.reloadOption[0].checked = true; setReloader()">
+    	<div style="color:black" width="100%" onclick="document.reload_options.reloadOption[0].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="0" checked>Never
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[1].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[1].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="5000">5 seconds
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[2].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[2].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="15000">15 seconds
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[3].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[3].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="30000">30 seconds
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[4].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[4].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="60000">1 minute
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[5].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[5].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="120000">2 minutes  
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[6].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[6].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="300000">5 minutes 
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[7].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[7].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="900000">15 minutes 
     	</div>
-            <div width="100%" onclick="document.reload_options.reloadOption[8].checked = true; setReloader()">
+            <div style="color:black" width="100%" onclick="document.reload_options.reloadOption[8].checked = true; setReloader()">
     	    <input type="radio" name="reloadOption" value="1800000">30 minutes
     	</div>
     
     	<!-- Free-form input -->
     	<!-- TODO: days/hours/minutes -->
     	<!-- XXX when the time is *real* high, like 999999999999999999999999999999999 seconds, the page just keeps reloading instantly -->
-    	<div id="freeFormDiv" width="100%">
+    	<div style="color:black" id="freeFormDiv" width="100%">
     	    <input type="radio" name="reloadOption" value="" id="freeForm"
     		onclick="var f = document.reload_options.reloadOptionSeconds; f.focus(); f.select()"
     	    />
