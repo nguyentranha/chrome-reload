@@ -11,7 +11,7 @@
                     chrome.tabs.getSelected(null, function(tab) {
                         var tabIsReloaderActive = tabs[tab.id] || false;
                         if (tabIsReloaderActive) {
-                            port.postMessage({ms_between_load:tabs[tab.id].ms_between_load});
+                            port.postMessage({ms_between_load:tabs[tab.id].ms_between_load, is_random:tabs[tab.id].is_random});
                         }
                     });
                 }
@@ -20,12 +20,12 @@
 
     });
 
-    function doReloader(time) {
+    function doReloader(time, isRandom) {
         if (time > 0) {
             chrome.tabs.getSelected(null, function(tab) {
 
                 if (tabs[tab.id] || false) {
-                    // if there is already a realoder setup for this tab, cancel it
+                    // if there is already a reloader setup for this tab, cancel it
                     cancelReload(tab.id);
                 }
                 
@@ -33,6 +33,7 @@
                 tabs[tab.id]['action_url'] = tab.url;
                 tabs[tab.id]['ms_between_load'] = time;
                 tabs[tab.id]['seconds_to_next_reload'] = time/1000;
+                tabs[tab.id]['is_random'] = isRandom;
 
                 chrome.tabs.onUpdated.addListener(onUpdateListener);
 
@@ -84,8 +85,16 @@
                 // reset the icon (it is cleared when reloaded)
                 chrome.browserAction.setIcon({path:"icons/KnobLoopOn.png", tabId:tabId}); // the icon is reset when the page is reloaded
 
+                // if we are using random timouts then we need to reset the time related variables here
+                if (tabs[tabId]['is_random']) {
+                    var time = Math.floor(Math.random()*1800000);
+                    tabs[tabId]['ms_between_load'] = time;
+                    tabs[tabId]['seconds_to_next_reload'] = time/1000;            
+                }
+
+
                 // reset the timer for the countdown
-                tabs[tabId].seconds_to_next_reload = tabs[tabId].ms_between_load/1000;
+                tabs[tabId].seconds_to_next_reload = tabs[tabId].seconds_to_next_reload;
 
                 // and set the correct countdown text
                 setBadgeText(tabId);
@@ -126,6 +135,8 @@
     }
 
     function setBadgeText(tab_id) {
+        chrome.browserAction.setBadgeText({text:'p1', tabId:tab_id});
+    
         if (tabs[tab_id].seconds_to_next_reload < 0) {
             // something is wrong! Don't display any text
             chrome.browserAction.setBadgeText({text:String(), tabId:tab_id});
