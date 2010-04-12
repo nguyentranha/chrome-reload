@@ -11,3 +11,13 @@
 = Version 0.2 - Jan 28, 2010 = 
 
   * Added editable time, thanks to Jan Minář 
+
+= Version 0.3 - Feb 1, 2010 = 
+
+  * Fixed problem with display of text when using chrome themes
+
+
+= Version 0.4 - April 12, 2010 = 
+
+  * Added random reload times
+  * Use Sans-Serif font
