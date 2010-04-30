@@ -1,12 +1,11 @@
 {
     "name": "ChromeReload",
-    "version": "0.4",
+    "version": "0.5",
     "icons": { "16": "icons/KnobLoopOn16.png",
                "32": "icons/KnobLoopOn.png",
                "48": "icons/KnobLoopOn48.png",
               "128": "icons/KnobLoopOn128.png" },
-    "description": "Automatically reload a page. Configure how often each page reloads and see a count-down until the next load",
-    "update_url": "http://chrome-reload.googlecode.com/svn/trunk/updates/updates.xml",
+    "description": "Automatically reload a page. Configure how often each page reloads and see a count-down until the next load",        
     "background_page": "background.html",
     "browser_action": {
         "default_title": "Reloader", 

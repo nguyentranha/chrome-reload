@@ -54,8 +54,8 @@
     function onUpdateListener(tabId, changeInfo) {
         // Hide the badge text
         chrome.browserAction.setBadgeText({text:'', tabId:tabId});
-
-        var tabIsReloaderActive = (tabs[tabId] || false) && (tabs[tabId].ms_between_load > 0 || false);
+        
+        var tabIsReloaderActive = (tabs[tabId] || false) && (tabs[tabId].ms_between_load > 0 || false);        
         if (tabIsReloaderActive) {
             // can only get the URL infomation when the page is loading, not when it is complete
             if (changeInfo['status'] === 'loading') {
@@ -88,14 +88,15 @@
                 // if we are using random timouts then we need to reset the time related variables here
                 if (tabs[tabId]['is_random']) {
                     var time = Math.floor(Math.random()*1800000);
-                    tabs[tabId]['ms_between_load'] = time;
-                    tabs[tabId]['seconds_to_next_reload'] = time/1000;            
+                    tabs[tabId].ms_between_load = time;
+                                
                 }
 
-
                 // reset the timer for the countdown
-                tabs[tabId].seconds_to_next_reload = tabs[tabId].seconds_to_next_reload;
+                tabs[tabId].seconds_to_next_reload = tabs[tabId].ms_between_load/1000;
 
+
+                
                 // and set the correct countdown text
                 setBadgeText(tabId);
 
@@ -135,7 +136,7 @@
     }
 
     function setBadgeText(tab_id) {
-        chrome.browserAction.setBadgeText({text:'p1', tabId:tab_id});
+        //chrome.browserAction.setBadgeText({text:'p1', tabId:tab_id});
     
         if (tabs[tab_id].seconds_to_next_reload < 0) {
             // something is wrong! Don't display any text
